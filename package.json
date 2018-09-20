@@ -12,6 +12,7 @@
   "author": "Dennis Walsh",
   "license": "ISC",
   "dependencies": {
+    "moment": "^2.22.2",
     "next": "^7.0.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
