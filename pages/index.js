@@ -1,6 +1,6 @@
 const Index = () => (
   <div>
-    <p>NextJS Hello Tucson Jet Center</p>
+    <p>NextJS Hello Tucson Jet Center, commit 3</p>
   </div>
 )
 
