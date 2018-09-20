@@ -1,5 +1,7 @@
 
 {
   "type": "static",
-  "public": true
+  "public": true,
+  "name": "sync",
+  "alias": ["tucsonjetcenter.com", "www.tucsonjetcenter.com"]
 }
