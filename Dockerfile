@@ -9,4 +9,4 @@ RUN npm install
 # We copy all source files
 COPY . .
 # We run the build and expose as /public
-RUN npm build && npm export -- -o /public
+RUN npm run build && npm run export -- -o /public
