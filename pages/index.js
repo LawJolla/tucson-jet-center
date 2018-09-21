@@ -92,7 +92,7 @@ const Left = styled.div`
   padding-top: 45px;
   @media (max-width: 992px) {
     max-width: 650px;
-    min-height: unset;
+    min-height: 1000px;
     padding-top: 0;
     margin-left: auto;
     margin-right: auto;
