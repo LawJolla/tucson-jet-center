@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled, { ThemeProvider, injectGlobal } from "styled-components";
+import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 // import Header from './Header';
 import Meta from "./Meta";
 
@@ -24,8 +24,7 @@ const Inner = styled.div`
   // padding: 2rem;
 `;
 
-injectGlobal`
-
+const GlobalStyle = createGlobalStyle`
   @font-face {
     font-family: 'Montserrat';
     src: url('https://fonts.googleapis.com/css?family=Montserrat') format('woff2');
@@ -57,6 +56,7 @@ class Page extends Component {
     return (
       <ThemeProvider theme={theme}>
         <StyledPage>
+          <GlobalStyle />
           <Meta />
           <Inner>{this.props.children}</Inner>
         </StyledPage>

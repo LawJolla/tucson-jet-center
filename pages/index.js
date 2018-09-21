@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Head } from "next/dist/server/document";
 import Timer from "../src/components/Timer";
+import Weather from "../src/components/Weather";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -108,7 +109,6 @@ const LogoWrap = styled.div`
 `;
 
 const ComingSoonWrapper = styled.div`
-  padding-bottom: 120px;
   p {
     font-size: 2.5em;
     line-height: 1.5;
@@ -141,9 +141,7 @@ const Index = () => (
           <a href="http://www.airnav.com/airport/KTUS/RATLIFF">AirNav</a>
         </div>
       </ComingSoonWrapper>
-      <LogoWrap style={{ opacity: 0 }}>
-        <img src="http://img.airnav.com/l/TUSRA/gold.gif?v=IDFRD2" alt="LOGO" />
-      </LogoWrap>
+      <Weather />
     </Left>
   </Wrapper>
 );
