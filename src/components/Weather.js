@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const WeatherWrapper = styled.div`
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 class Weather extends React.Component {
