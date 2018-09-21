@@ -2,10 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const WeatherWrapper = styled.div`
-  width: 100%;
-  .forecast {
-    margin: 0 !important;
-  }
+  overflow: hidden;
 `;
 
 class Weather extends React.Component {
