@@ -1,149 +1,189 @@
-import React from "react";
-import styled from "styled-components";
-import { Head } from "next/dist/server/document";
-import Timer from "../src/components/Timer";
-import Weather from "../src/components/Weather";
+import React from "react"
+import styled from "styled-components"
+import { Parallax, ParallaxLayer } from "react-spring/dist/addons.cjs.js"
+import { config, animated } from "react-spring"
+import PaperPlane from "../src/icons/paperPlane"
+import { Head } from "next/dist/server/document"
+import Timer from "../src/components/Timer"
+import Weather from "../src/components/Weather"
+import useWindowScrollPosition from "../src/hooks/useWindowScrollPosition"
+import FuelPrices from "../src/components/FuelPrices"
+import Maintenance from "../src/components/Maintenance"
 
-const Wrapper = styled.div`
-  width: 100%;
-  min-height: 100vh;
-  background-color: #fff;
-  position: relative;
-  z-index: 1;
-`;
-const BackgroundImage = styled.div`
-  background-image: url("../static/airport-background.jpg");
-  background-position: left;
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  width: 71%;
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  right: 0;
-  overflow: hidden;
-  padding: 50px 50px 150px 320px;
+const Wrapper = styled.div``
+
+const HeroStyled = styled(animated.div)`
+  display: grid;
+
+  margin: auto;
+  grid-template-rows: ${p => p.theme.spacing.ten}px max-content;
+  grid-row-gap: ${p => p.theme.spacing.eleven}px;
+  font-size: ${p => p.theme.spacing.six}px;
+  color: hsl(${p => p.theme.primary.nine});
+  font-weight: ${p => p.theme.weight.heavy};
+  opacity: ${p => (p.hide ? 0 : 1)};
+  max-width: ${p => p.theme.maxWidth}px;
+`
+
+const Nav = styled.div`
+  align-self: end;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  &::before {
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: -3;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.3);
-  }
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: -2;
-    top: 0;
-    right: 100%;
-    width: 10000px;
-    height: 100%;
-    background-color: #fff;
-    transform-origin: bottom right;
-    transform: skewX(156deg);
-    @media (max-width: 992px) {
-      top: 100%;
-      right: 0;
-      width: 100%;
-      height: 10000px;
-      transform-origin: top right;
-      transform: skew(180deg, 8deg);
-    }
-  }
-  @media (max-width: 992px) {
-    position: relative;
-    width: 100%;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-`;
-
-const Strong = styled.span`
-  font-weight: bold;
-  color: #555555;
-`;
-
-const Left = styled.div`
-  @media (max-width: 1200px) {
-    padding-left: 30px;
-    padding-right: 30px;
-  }
-  @media (max-width: 1600px) {
-    max-width: 38%;
-  }
-  max-width: 650px;
-  min-height: 100vh;
-  flex-direction: column;
+  align-items: flex-end;
   justify-content: space-between;
-  flex-wrap: wrap;
-  display: flex;
-  padding-right: 75px;
-  padding-left: 75px;
-  padding-bottom: 45px;
-  padding-top: 45px;
-  @media (max-width: 992px) {
-    max-width: 650px;
-    min-height: 1000px;
-    padding-top: 0;
-    margin-left: auto;
-    margin-right: auto;
-  }
-`;
+  padding: 0 ${p => p.theme.spacing.eight}px;
+`
 
-const LogoWrap = styled.div`
-  width: 80%;
-  img {
-    max-width: 100%;
-    vertical-align: middle;
-    border-style: none;
-  }
-`;
+const CTAWrapper = styled.div`
+  padding: 0 ${p => p.theme.spacing.eight}px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-row-gap: ${p => p.theme.spacing.nine}px;
+  max-height: calc(60vh - ${p => p.theme.spacing.ten}px);
+`
 
-const ComingSoonWrapper = styled.div`
-  p {
-    font-size: 2.5em;
-    line-height: 1.5;
-    color: #555555;
-  }
-  div {
-    font-size: 1.5em;
-  }
-  a {
-    text-decoration: underline;
-  }
-`;
+const Logo = styled.div`
+  display: grid;
+  grid-template-columns: 50px 1fr;
+  align-items: end;
+`
 
-const Index = () => (
-  <Wrapper>
-    <BackgroundImage>
-      <Timer />
-    </BackgroundImage>
+const Links = styled.div`
+  display: grid;
+  grid-auto-columns: min-content;
+  grid-auto-flow: column;
+  grid-gap: ${p => p.theme.spacing.eight}px;
+  text-transform: uppercase;
+  font-size: ${p => p.theme.spacing.five}px;
+`
 
-    <Left>
-      <LogoWrap>
-        <img src="http://img.airnav.com/l/TUSRA/gold.gif?v=IDFRD2" alt="LOGO" />
-      </LogoWrap>
-      <ComingSoonWrapper>
-        <p>
-          Our website is <Strong>Coming Soon</Strong>!
-        </p>
-        <div>
-          Until then, please check out our{" "}
-          <a href="http://www.airnav.com/airport/KTUS/RATLIFF">AirNav</a>
-        </div>
-      </ComingSoonWrapper>
-      <Weather />
-    </Left>
-  </Wrapper>
-);
+const CTA = styled.div`
+  display: grid;
+  font-size: ${p => p.theme.spacing.six}px;
+  grid-row-gap: ${p => p.theme.spacing.nine}px;
+`
 
-export default Index;
+const Message = styled.div`
+  display: grid;
+  grid-row-gap: ${p => p.theme.spacing.eight}px;
+  color: hsl(${p => p.theme.primary.six});
+  font-weight: ${p => p.theme.weight.normal};
+`
+
+const Button = styled.button`
+  padding: ${p => p.theme.spacing.four}px ${p => p.theme.spacing.five}px;
+  border-radius: ${p => p.theme.radius.rounded}px;
+  background: hsl(${p => p.theme.primary.one});
+  color: hsl(${p => p.theme.primary.nine});
+  font-weight: ${p => p.theme.weight.heavy};
+  max-width: ${p => p.theme.spacing.twelve}px;
+  font-size: ${p => p.theme.spacing.five}px;
+`
+
+const PlaneDrawing = styled.div`
+  position: relative;
+  & img {
+    position: absolute;
+    opacity: 0.8;
+    top: -64px;
+    right: 0;
+    width: 90%;
+    max-width: 400px;
+    transform: rotate(14deg);
+    filter: drop-shadow(0 15px 25px hsla(${p => p.theme.primary.ten}, 0.3))
+      drop-shadow(9px 5px 10px hsla(${p => p.theme.primary.seven}, 0.65));
+  }
+`
+
+const PaddingRow = styled.div``
+const Main = styled(animated.div)`
+  background: hsl(${p => p.theme.neutral.one});
+  height: 30vh;
+  width: 100%;
+  position: relative;
+`
+
+const Clouds = styled.div`
+  width: 100%;
+  position: absolute;
+  top: -10vh;
+  left: 0;
+  max-height: 30vh;
+  > img {
+    max-height: 20vh;
+  }
+`
+
+const Logos = styled.div``
+
+const FuelPrice = styled.div``
+
+const More = styled.div`
+  width: 100%;
+  height: 3000px;
+  background: hsl(${p => p.theme.neutral.one});
+`
+const ParallaxContainer = styled.div`
+  position: absolute;
+  width: 100%;
+  transition: transform 0.1s;
+`
+const Index = () => {
+  const { y } =
+    typeof window !== "undefined" ? useWindowScrollPosition() : { x: 0, y: 0 }
+
+  return (
+    <>
+      <Parallax pages={4} config={config.stiff}>
+        <ParallaxLayer
+          factor={0.5}
+          speed={-0.3}
+          style={{ background: "white" }}
+        >
+          <Hero />
+        </ParallaxLayer>
+        <ParallaxLayer offset={0.8}>
+          <Main>
+            <Clouds>
+              <img src="../static/clouds_banner_long.png" />
+            </Clouds>
+          </Main>
+        </ParallaxLayer>
+        <ParallaxLayer offset={1}>
+          <Logos>Logos</Logos>
+          <FuelPrices />
+          <Maintenance />
+          <More />
+        </ParallaxLayer>
+      </Parallax>
+    </>
+  )
+}
+
+const Hero = ({ hide = false }) => (
+  <HeroStyled hide={hide}>
+    <Nav>
+      <span>Tucson Jet Center</span>
+
+      <Links>
+        <a>Fuel</a>
+        <a>Maintenance</a>
+        <a>Facility</a>
+      </Links>
+    </Nav>
+    <CTAWrapper>
+      <CTA>
+        <Message>
+          <span>Twenty years of home-grown service.</span>
+          <span>Twenty minute quick turn.</span>
+        </Message>
+        <Button>Book Now</Button>
+      </CTA>
+      <PlaneDrawing>
+        <img src="../static/plane.png" />
+      </PlaneDrawing>
+    </CTAWrapper>
+    <PaddingRow />
+  </HeroStyled>
+)
+
+export default Index
