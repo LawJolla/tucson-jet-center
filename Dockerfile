@@ -3,10 +3,10 @@ FROM mhart/alpine-node:10
 WORKDIR /usr/src
 # We first add only the files required for installing deps
 # If package.json or yarn.lock don't change, no need to re-install later
-COPY package.json package-lock.json ./
+COPY package.json yarn.lock ./
 # We install our deps
-RUN npm install
+RUN yarn
 # We copy all source files
 COPY . .
 # We run the build and expose as /public
-RUN npm run build && npm run export -- -o /public
+RUN yarn run build && yarn run export -- -o /public
